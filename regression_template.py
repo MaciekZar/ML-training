@@ -63,7 +63,7 @@ X_opt = pd.concat([pd.Series([1 for n in range(len(df.index))]),df.loc[:,[ ''  ]
 X_Modeled = backwardElimination(X_opt,df[''], SL)
 print(X_Modeled)
 
-#To samo tylko ręcznie
+#manual backwardElimination
 # df2 = pd.concat([pd.Series([1 for row in df['']]),df.loc[:,['' ]]],axis=1)
 # regressor_stats = smf.OLS(df[''], df2).fit()
 # print(regressor_stats.summary())
