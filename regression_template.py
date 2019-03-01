@@ -57,6 +57,39 @@ def backwardElimination(x,y, sl, columns = False):
     return x
 # end backwardElimination
 
+
+#start backwardElimination_adjustedR
+def backwardElimination_adj_R(x,y):
+    """Automatic search for best features set based on Adj. R-squared
+    x = pandas.DataFrame y = list/column with result,
+    """
+    Best_AdjR2 = 0
+    bestFeatureSet = []
+    from itertools import combinations
+    #Possible combinations of features from data set
+    for no in range(1,len(x.columns)+1):
+        possibleCombinations = list(combinations(x.columns,no))
+        cols = [[column for column in combination] for combination in possibleCombinations]
+        print(cols)
+        print('======')
+        #checking adj. R-squared with a given set of columns
+        for col in cols:
+            xprim = pd.concat([pd.Series([1 for row in df.iloc[:,0]]),x.loc[:,col]],axis=1)
+            regressor_OLS = smf.OLS(y, xprim).fit()
+            if regressor_OLS.rsquared_adj > Best_AdjR2:
+                Best_AdjR2 = regressor_OLS.rsquared_adj
+                bestFeatureSet = [col]
+            elif regressor_OLS.rsquared_adj == Best_AdjR2:
+                bestFeatureSet.append(col)
+    #best value of adjR-sq
+    print(Best_AdjR2)
+    #list of features
+    return bestFeatureSet
+#end backwardElimination_adj_R
+
+
+
+
 # example, alfa = 0.05
 SL = 0.05
 X_opt = pd.concat([pd.Series([1 for n in range(len(df.index))]),df.loc[:,[ ''  ]]],axis=1).values
