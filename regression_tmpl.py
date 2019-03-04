@@ -1,3 +1,7 @@
+"""Regression - set of tools"""
+
+
+# basic libraries
 import pandas as pd
 import numpy as np
 import statsmodels.formula.api as smf
@@ -29,10 +33,8 @@ df3['y_result'] = y_test
 df3['difference'] = y_test - y_pred
 print(df3)
 
-#Building best model
-
-#
-#start backwardElimination
+#in search of best model
+#start backwardElimination (by SuperDatascience.com [modified])
 def backwardElimination(x,y, sl, columns = False):
     """Automatic search for best features set BASED on p-value
     x- pandas.DataFrame y = list/column , sl - alfa
@@ -88,8 +90,6 @@ def backwardElimination_adj_R(x,y):
 #end backwardElimination_adj_R
 
 
-
-
 # example, alfa = 0.05
 SL = 0.05
 X_opt = pd.concat([pd.Series([1 for n in range(len(df.index))]),df.loc[:,[ ''  ]]],axis=1).values
@@ -101,7 +101,4 @@ print(X_Modeled)
 # regressor_stats = smf.OLS(df[''], df2).fit()
 # print(regressor_stats.summary())
 # print('=='*70)
-
-
-
 
